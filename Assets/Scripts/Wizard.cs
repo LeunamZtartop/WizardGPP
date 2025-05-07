@@ -8,6 +8,8 @@ public class Wizard : MonoBehaviour
 {
     public GameObject FireballPrefab;
     private Rigidbody2D RB;
+    public float health = 100;
+    public float mana = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -18,14 +20,13 @@ public class Wizard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float speed = 1;
         bool wPressed = Input.GetKey("w");
         bool sPressed = Input.GetKey("s");
         bool aPressed = Input.GetKey("a");
         bool dPressed = Input.GetKey("d");
         bool spacePressed = Input.GetKeyUp(KeyCode.Space);
-        int LastDirection = 0;
-
 
         if (wPressed ^ sPressed)
         {
@@ -38,33 +39,30 @@ public class Wizard : MonoBehaviour
         if (wPressed)
         {
             transform.position = transform.position + (Vector3.up * 0.02f) * speed;
-            LastDirection = 0;
         }
         
         if (sPressed)
         {
             transform.position = transform.position + (Vector3.down * 0.02f) * speed;
-            LastDirection = 1;
         }   
         
         if (aPressed)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             transform.position = transform.position + (Vector3.left * 0.02f) * speed;
-            LastDirection = 2;
         }   
         
-        if (dPressed)
-        {
+        if (dPressed) {
             GetComponent<SpriteRenderer>().flipX = false;
             transform.position = transform.position + (Vector3.right * 0.02f) *speed;
-            LastDirection = 3;
         }   
 
-        if (spacePressed) {
-            Instantiate(FireballPrefab, transform.position, quaternion.identity);
+        if (mana < 100) {
             
         }
-        
+
+        if (spacePressed && mana > 20) {
+            Instantiate(FireballPrefab, transform.position, quaternion.identity);   
+        }
     }
 }
